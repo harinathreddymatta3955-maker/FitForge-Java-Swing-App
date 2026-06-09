@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FitForgeGUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FitForge</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">FitForgeGUI.java</span></div><h1>FitForgeGUI.java</h1><pre class="source lang-java linenums">import javax.swing.*;
+import java.awt.*;
+
+public class FitForgeGUI extends JFrame { 
+<span class="nc" id="L5">   class BackgroundPanel extends JPanel {</span>
+
+    @Override
+    protected void paintComponent(Graphics g) {
+<span class="nc" id="L9">        super.paintComponent(g);</span>
+
+<span class="nc" id="L11">        Graphics2D g2d = (Graphics2D) g;</span>
+
+<span class="nc" id="L13">        GradientPaint gradient = new GradientPaint(</span>
+                0, 0, new Color(15, 15, 15),
+<span class="nc" id="L15">                getWidth(), getHeight(), new Color(45, 45, 45)</span>
+        );
+
+<span class="nc" id="L18">        g2d.setPaint(gradient);</span>
+<span class="nc" id="L19">        g2d.fillRect(0, 0, getWidth(), getHeight());</span>
+
+<span class="nc" id="L21">        g2d.setColor(new Color(220, 20, 60));</span>
+<span class="nc" id="L22">        g2d.fillRect(0, 0, getWidth(), 8);</span>
+
+<span class="nc" id="L24">        g2d.setColor(new Color(255, 255, 255, 25));</span>
+<span class="nc" id="L25">        g2d.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 80));</span>
+<span class="nc" id="L26">        g2d.drawString(&quot;FITFORGE&quot;, 650, 180);</span>
+
+<span class="nc" id="L28">        g2d.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 34));</span>
+<span class="nc" id="L29">        g2d.drawString(&quot;DISCIPLINE&quot;, 700, 280);</span>
+<span class="nc" id="L30">        g2d.drawString(&quot;FOCUS&quot;, 700, 340);</span>
+<span class="nc" id="L31">        g2d.drawString(&quot;CONSISTENCY&quot;, 700, 400);</span>
+<span class="nc" id="L32">        g2d.drawString(&quot;SUCCESS&quot;, 700, 460);</span>
+<span class="nc" id="L33">    }</span>
+}
+<span class="nc" id="L35">class ReportBackgroundPanel extends JPanel {</span>
+
+    @Override
+    protected void paintComponent(Graphics g) {
+<span class="nc" id="L39">        super.paintComponent(g);</span>
+
+<span class="nc" id="L41">        Graphics2D g2d = (Graphics2D) g;</span>
+
+<span class="nc" id="L43">        GradientPaint gradient = new GradientPaint(</span>
+                0, 0, new Color(10, 20, 40),
+<span class="nc" id="L45">                getWidth(), getHeight(), new Color(0, 0, 0)</span>
+        );
+
+<span class="nc" id="L48">        g2d.setPaint(gradient);</span>
+<span class="nc" id="L49">        g2d.fillRect(0, 0, getWidth(), getHeight());</span>
+
+<span class="nc" id="L51">        g2d.setColor(new Color(0, 255, 255, 25));</span>
+<span class="nc" id="L52">        g2d.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 90));</span>
+
+<span class="nc" id="L54">        g2d.drawString(&quot;FITFORGE&quot;, 450, 150);</span>
+
+<span class="nc" id="L56">        g2d.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 30));</span>
+
+<span class="nc" id="L58">        g2d.drawString(&quot;BMI&quot;, 900, 300);</span>
+<span class="nc" id="L59">        g2d.drawString(&quot;CALORIES&quot;, 850, 380);</span>
+<span class="nc" id="L60">        g2d.drawString(&quot;PROTEIN&quot;, 850, 460);</span>
+<span class="nc" id="L61">    }</span>
+}
+
+    JTextField nameField, ageField, heightField, weightField;
+    JRadioButton maleBtn, femaleBtn;
+    JRadioButton vegBtn, nonVegBtn;
+    JTextArea resultArea;
+    CardLayout cardLayout;
+    JPanel mainContainer;
+    JPanel inputPage;
+    JPanel reportPage;
+
+<span class="nc" id="L73">    public FitForgeGUI() {</span>
+<span class="nc" id="L74">        setTitle(&quot;FitForge&quot;);</span>
+<span class="nc" id="L75">        setSize(1200, 700);</span>
+<span class="nc" id="L76">        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L77">        cardLayout = new CardLayout();</span>
+<span class="nc" id="L78">        mainContainer = new JPanel(cardLayout);</span>
+<span class="nc" id="L79">                inputPage = new BackgroundPanel();</span>
+<span class="nc" id="L80">                inputPage.setLayout(null);</span>
+
+<span class="nc" id="L82">        reportPage = new ReportBackgroundPanel();</span>
+<span class="nc" id="L83">        reportPage.setLayout(null);</span>
+
+<span class="nc" id="L85">        mainContainer.add(inputPage, &quot;input&quot;);</span>
+<span class="nc" id="L86">        mainContainer.add(reportPage, &quot;report&quot;);</span>
+
+<span class="nc" id="L88">        setContentPane(mainContainer);</span>
+
+<span class="nc" id="L90">        addLabel(&quot;Name:&quot;, 30, 20);</span>
+<span class="nc" id="L91">        nameField = addTextField(150, 20);</span>
+
+<span class="nc" id="L93">        addLabel(&quot;Age:&quot;, 30, 60);</span>
+<span class="nc" id="L94">        ageField = addTextField(150, 60);</span>
+
+<span class="nc" id="L96">        addLabel(&quot;Gender:&quot;, 30, 100);</span>
+<span class="nc" id="L97">        maleBtn = new JRadioButton(&quot;Male&quot;);</span>
+<span class="nc" id="L98">        femaleBtn = new JRadioButton(&quot;Female&quot;);</span>
+<span class="nc" id="L99">        maleBtn.setBounds(150, 100, 80, 25);</span>
+<span class="nc" id="L100">        femaleBtn.setBounds(240, 100, 100, 25);</span>
+
+<span class="nc" id="L102">        ButtonGroup genderGroup = new ButtonGroup();</span>
+<span class="nc" id="L103">        genderGroup.add(maleBtn);</span>
+<span class="nc" id="L104">        genderGroup.add(femaleBtn);</span>
+
+<span class="nc" id="L106">        inputPage.add(maleBtn);</span>
+<span class="nc" id="L107">        inputPage.add(femaleBtn);</span>
+
+<span class="nc" id="L109">        addLabel(&quot;Diet Type:&quot;, 30, 140);</span>
+<span class="nc" id="L110">        vegBtn = new JRadioButton(&quot;Veg&quot;);</span>
+<span class="nc" id="L111">        nonVegBtn = new JRadioButton(&quot;Non-Veg&quot;);</span>
+<span class="nc" id="L112">        vegBtn.setBounds(150, 140, 80, 25);</span>
+<span class="nc" id="L113">        nonVegBtn.setBounds(240, 140, 100, 25);</span>
+
+<span class="nc" id="L115">        ButtonGroup dietGroup = new ButtonGroup();</span>
+<span class="nc" id="L116">        dietGroup.add(vegBtn);</span>
+<span class="nc" id="L117">        dietGroup.add(nonVegBtn);</span>
+<span class="nc" id="L118">        inputPage.add(vegBtn);</span>
+<span class="nc" id="L119">        inputPage.add(nonVegBtn);</span>
+
+<span class="nc" id="L121">        addLabel(&quot;Height (cm):&quot;, 30, 180);</span>
+<span class="nc" id="L122">        heightField = addTextField(150, 180);</span>
+
+<span class="nc" id="L124">        addLabel(&quot;Weight (kg):&quot;, 30, 220);</span>
+<span class="nc" id="L125">        weightField = addTextField(150, 220);</span>
+
+<span class="nc" id="L127">        addLabel(&quot;Select Goal:&quot;, 30, 270);</span>
+<span class="nc" id="L128">        JRadioButton bulkBtn = new JRadioButton(&quot;Bulk&quot;);</span>
+<span class="nc" id="L129">        JRadioButton cutBtn = new JRadioButton(&quot;Cut&quot;);</span>
+<span class="nc" id="L130">        JRadioButton maintainBtn = new JRadioButton(&quot;Maintain&quot;);</span>
+
+<span class="nc" id="L132">        bulkBtn.setBounds(30, 300, 150, 25);</span>
+<span class="nc" id="L133">        cutBtn.setBounds(30, 330, 150, 25);</span>
+<span class="nc" id="L134">        maintainBtn.setBounds(30, 360, 150, 25);</span>
+
+<span class="nc" id="L136">        ButtonGroup goalGroup = new ButtonGroup();</span>
+<span class="nc" id="L137">        goalGroup.add(bulkBtn);</span>
+<span class="nc" id="L138">        goalGroup.add(cutBtn);</span>
+<span class="nc" id="L139">        goalGroup.add(maintainBtn);</span>
+
+<span class="nc" id="L141">        inputPage.add(bulkBtn);</span>
+<span class="nc" id="L142">        inputPage.add(cutBtn);</span>
+<span class="nc" id="L143">        inputPage.add(maintainBtn);</span>
+
+<span class="nc" id="L145">        addLabel(&quot;Select Experience:&quot;, 30, 400);</span>
+<span class="nc" id="L146">        JRadioButton beginnerBtn = new JRadioButton(&quot;Beginner&quot;);</span>
+<span class="nc" id="L147">        JRadioButton intermediateBtn = new JRadioButton(&quot;Intermediate&quot;);</span>
+<span class="nc" id="L148">        JRadioButton advancedBtn = new JRadioButton(&quot;Advanced&quot;);</span>
+
+<span class="nc" id="L150">        beginnerBtn.setBounds(30, 430, 150, 25);</span>
+<span class="nc" id="L151">        intermediateBtn.setBounds(30, 460, 150, 25);</span>
+<span class="nc" id="L152">        advancedBtn.setBounds(30, 490, 150, 25);</span>
+
+<span class="nc" id="L154">        ButtonGroup expGroup = new ButtonGroup();</span>
+<span class="nc" id="L155">        expGroup.add(beginnerBtn);</span>
+<span class="nc" id="L156">        expGroup.add(intermediateBtn);</span>
+<span class="nc" id="L157">        expGroup.add(advancedBtn);</span>
+
+<span class="nc" id="L159">        inputPage.add(beginnerBtn);</span>
+<span class="nc" id="L160">        inputPage.add(intermediateBtn);</span>
+<span class="nc" id="L161">        inputPage.add(advancedBtn);</span>
+
+<span class="nc" id="L163">        addLabel(&quot;Workout Days:&quot;, 30, 530);</span>
+<span class="nc" id="L164">        JComboBox&lt;String&gt; daysBox = new JComboBox&lt;&gt;(</span>
+                new String[]{&quot;3 Days&quot;, &quot;4 Days&quot;, &quot;5 Days&quot;, &quot;6 Days&quot;}
+        );
+<span class="nc" id="L167">        daysBox.setBounds(30, 560, 150, 30);</span>
+<span class="nc" id="L168">        inputPage.add(daysBox);</span>
+
+<span class="nc" id="L170">        JButton submitBtn = new JButton(&quot;Generate Plan&quot;);</span>
+<span class="nc" id="L171">        submitBtn.setBounds(30, 610, 150, 35);</span>
+<span class="nc" id="L172">        inputPage.add(submitBtn);</span>
+
+<span class="nc" id="L174">       resultArea = new JTextArea();</span>
+<span class="nc" id="L175">resultArea.setEditable(false);</span>
+<span class="nc" id="L176">resultArea.setLineWrap(true);</span>
+<span class="nc" id="L177">resultArea.setWrapStyleWord(true);</span>
+<span class="nc" id="L178">resultArea.setOpaque(true);</span>
+<span class="nc" id="L179">resultArea.setBackground(new Color(8, 18, 35));</span>
+<span class="nc" id="L180">resultArea.setForeground(new Color(230, 230, 230));</span>
+<span class="nc" id="L181">resultArea.setForeground(Color.WHITE);</span>
+<span class="nc" id="L182">resultArea.setFont(new Font(&quot;Consolas&quot;, Font.BOLD, 16));</span>
+<span class="nc" id="L183">resultArea.setFont(new Font(&quot;Consolas&quot;, Font.PLAIN, 16));</span>
+<span class="nc" id="L184">resultArea.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));</span>
+<span class="nc" id="L185">resultArea.setFont(new Font(&quot;Consolas&quot;, Font.PLAIN, 16));</span>
+
+<span class="nc" id="L187">JScrollPane reportScroll = new JScrollPane(resultArea);</span>
+<span class="nc" id="L188">reportScroll.setBounds(50, 50, 1050, 540);</span>
+<span class="nc" id="L189">reportScroll.setBorder(</span>
+<span class="nc" id="L190">    BorderFactory.createLineBorder(new Color(0, 220, 180), 3)</span>
+);
+<span class="nc" id="L192">reportPage.add(reportScroll);</span>
+
+<span class="nc" id="L194">JButton backBtn = new JButton(&quot;Back&quot;);</span>
+<span class="nc" id="L195">backBtn.setBounds(50, 610, 120, 35);</span>
+<span class="nc" id="L196">reportPage.add(backBtn);</span>
+
+<span class="nc" id="L198">backBtn.addActionListener(e -&gt; {</span>
+<span class="nc" id="L199">    cardLayout.show(mainContainer, &quot;input&quot;);</span>
+<span class="nc" id="L200">});</span>
+
+<span class="nc" id="L202">        submitBtn.addActionListener(e -&gt; {</span>
+            try {
+<span class="nc" id="L204">                String name = nameField.getText();</span>
+<span class="nc" id="L205">                int age = Integer.parseInt(ageField.getText());</span>
+<span class="nc" id="L206">                double height = Double.parseDouble(heightField.getText());</span>
+<span class="nc" id="L207">                double weight = Double.parseDouble(weightField.getText());</span>
+
+<span class="nc bnc" id="L209" title="All 2 branches missed.">                String gender = maleBtn.isSelected() ? &quot;Male&quot; :</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">                        femaleBtn.isSelected() ? &quot;Female&quot; : &quot;Not selected&quot;;</span>
+
+<span class="nc bnc" id="L212" title="All 2 branches missed.">                String dietType = vegBtn.isSelected() ? &quot;Veg&quot; :</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">                        nonVegBtn.isSelected() ? &quot;Non-Veg&quot; : &quot;Not selected&quot;;</span>
+
+<span class="nc bnc" id="L215" title="All 2 branches missed.">                String goal = bulkBtn.isSelected() ? &quot;Bulk&quot; :</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">                        cutBtn.isSelected() ? &quot;Cut&quot; :</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">                                maintainBtn.isSelected() ? &quot;Maintain&quot; : &quot;Not selected&quot;;</span>
+
+<span class="nc bnc" id="L219" title="All 2 branches missed.">                String experience = beginnerBtn.isSelected() ? &quot;Beginner&quot; :</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">                        intermediateBtn.isSelected() ? &quot;Intermediate&quot; :</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">                                advancedBtn.isSelected() ? &quot;Advanced&quot; : &quot;Not selected&quot;;</span>
+
+<span class="nc" id="L223">                String days = daysBox.getSelectedItem().toString();</span>
+
+<span class="nc bnc" id="L225" title="All 4 branches missed.">                if (gender.equals(&quot;Not selected&quot;) || dietType.equals(&quot;Not selected&quot;)</span>
+<span class="nc bnc" id="L226" title="All 4 branches missed.">                        || goal.equals(&quot;Not selected&quot;) || experience.equals(&quot;Not selected&quot;)) {</span>
+<span class="nc" id="L227">                    JOptionPane.showMessageDialog(this, &quot;Please select all options.&quot;);</span>
+<span class="nc" id="L228">                    return;</span>
+                }
+
+<span class="nc" id="L231">                double bmi = calculateBMI(height, weight);</span>
+<span class="nc" id="L232">                String bmiCategory = getBMICategory(bmi);</span>
+<span class="nc" id="L233">                String ageCategory = getAgeCategory(age);</span>
+<span class="nc" id="L234">                String weightCategory = getWeightCategory(weight);</span>
+
+<span class="nc" id="L236">                double protein = calculateProtein(weight, age, goal);</span>
+<span class="nc" id="L237">                double calories = calculateCalories(weight, age, goal);</span>
+
+<span class="nc" id="L239">                String mealPlan = generateMealPlan(ageCategory, goal, dietType, protein, calories);</span>
+<span class="nc" id="L240">                String workoutPlan = generateWorkoutPlan(ageCategory, goal, experience, days);</span>
+
+<span class="nc" id="L242">                resultArea.setText(</span>
+                        &quot;===== FITFORGE FITNESS REPORT =====\n\n&quot; +
+                                &quot;Name: &quot; + name +
+                                &quot;\nAge: &quot; + age +
+                                &quot;\nAge Category: &quot; + ageCategory +
+                                &quot;\nGender: &quot; + gender +
+                                &quot;\nDiet Type: &quot; + dietType +
+                                &quot;\nHeight: &quot; + height + &quot; cm&quot; +
+                                &quot;\nWeight: &quot; + weight + &quot; kg&quot; +
+                                &quot;\nWeight Category: &quot; + weightCategory +
+<span class="nc" id="L252">                                &quot;\n\nBMI: &quot; + String.format(&quot;%.2f&quot;, bmi) +</span>
+                                &quot;\nBMI Category: &quot; + bmiCategory +
+<span class="nc" id="L254">                                &quot;\nCalories Target: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot; +</span>
+<span class="nc" id="L255">                                &quot;\nProtein Goal: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+                                &quot;\n\nGoal: &quot; + goal +
+                                &quot;\nExperience: &quot; + experience +
+                                &quot;\nWorkout Days: &quot; + days +
+                                mealPlan +
+                                workoutPlan
+                );
+<span class="nc" id="L262">                cardLayout.show(mainContainer, &quot;report&quot;);</span>
+
+<span class="nc" id="L264">            } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L265">                JOptionPane.showMessageDialog(this,</span>
+                        &quot;Please enter valid numbers for age, height, and weight.&quot;);
+<span class="nc" id="L267">            }</span>
+<span class="nc" id="L268">        });</span>
+
+<span class="nc" id="L270">        setVisible(true);</span>
+<span class="nc" id="L271">    }</span>
+
+    public void addLabel(String text, int x, int y) {
+<span class="nc" id="L274">    JLabel label = new JLabel(text);</span>
+<span class="nc" id="L275">    label.setBounds(x, y, 120, 25);</span>
+<span class="nc" id="L276">    inputPage.add(label);</span>
+<span class="nc" id="L277">}</span>
+
+    public JTextField addTextField(int x, int y) {
+<span class="nc" id="L280">    JTextField field = new JTextField();</span>
+<span class="nc" id="L281">    field.setBounds(x, y, 200, 25);</span>
+<span class="nc" id="L282">    inputPage.add(field);</span>
+<span class="nc" id="L283">    return field;</span>
+}
+
+    public double calculateBMI(double heightCm, double weight) {
+<span class="nc" id="L287">        double heightM = heightCm / 100;</span>
+<span class="nc" id="L288">        return weight / (heightM * heightM);</span>
+    }
+
+    public String getBMICategory(double bmi) {
+<span class="nc bnc" id="L292" title="All 2 branches missed.">        if (bmi &lt; 18.5) return &quot;Underweight&quot;;</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">        else if (bmi &lt; 25) return &quot;Normal&quot;;</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">        else if (bmi &lt; 30) return &quot;Overweight&quot;;</span>
+<span class="nc" id="L295">        else return &quot;Obese&quot;;</span>
+    }
+
+    public String getAgeCategory(int age) {
+<span class="nc bnc" id="L299" title="All 2 branches missed.">        if (age &lt; 13) return &quot;Child&quot;;</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">        else if (age &lt; 18) return &quot;Teenager&quot;;</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">        else if (age &lt; 60) return &quot;Adult&quot;;</span>
+<span class="nc" id="L302">        else return &quot;Senior&quot;;</span>
+    }
+
+    public double calculateProtein(double weight, int age, String goal) {
+<span class="nc bnc" id="L306" title="All 2 branches missed.">        if (age &lt; 13) return weight * 1.0;</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">        else if (age &lt; 18) return weight * 1.5;</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">        else if (age &gt;= 60) return weight * 1.2;</span>
+
+<span class="nc bnc" id="L310" title="All 2 branches missed.">        if (goal.equals(&quot;Bulk&quot;)) return weight * 2.0;</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">        else if (goal.equals(&quot;Cut&quot;)) return weight * 1.8;</span>
+<span class="nc" id="L312">        else return weight * 1.6;</span>
+    }
+
+    public double calculateCalories(double weight, int age, String goal) {
+<span class="nc bnc" id="L316" title="All 2 branches missed.">        if (age &lt; 13) return weight * 35;</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">        else if (age &lt; 18) return weight * 38;</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">        else if (age &gt;= 60) return weight * 28;</span>
+
+<span class="nc bnc" id="L320" title="All 2 branches missed.">        if (goal.equals(&quot;Bulk&quot;)) return weight * 40;</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">        else if (goal.equals(&quot;Cut&quot;)) return weight * 30;</span>
+<span class="nc" id="L322">        else return weight * 35;</span>
+    }
+
+    public String getWeightCategory(double weight) {
+<span class="nc bnc" id="L326" title="All 2 branches missed.">        if (weight &lt;= 40) return &quot;Below 40 kg&quot;;</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">        else if (weight &lt;= 50) return &quot;41-50 kg&quot;;</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">        else if (weight &lt;= 60) return &quot;51-60 kg&quot;;</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">        else if (weight &lt;= 70) return &quot;61-70 kg&quot;;</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">        else if (weight &lt;= 80) return &quot;71-80 kg&quot;;</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">        else if (weight &lt;= 90) return &quot;81-90 kg&quot;;</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">        else if (weight &lt;= 100) return &quot;91-100 kg&quot;;</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">        else if (weight &lt;= 110) return &quot;101-110 kg&quot;;</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">        else if (weight &lt;= 120) return &quot;111-120 kg&quot;;</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">        else if (weight &lt;= 130) return &quot;121-130 kg&quot;;</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">        else if (weight &lt;= 140) return &quot;131-140 kg&quot;;</span>
+<span class="nc" id="L337">        else return &quot;Above 140 kg&quot;;</span>
+    }
+
+    public String generateMealPlan(String ageCategory, String goal, String dietType,
+                                   double protein, double calories) {
+
+<span class="nc bnc" id="L343" title="All 2 branches missed.">        if (ageCategory.equals(&quot;Child&quot;)) {</span>
+<span class="nc" id="L344">            return &quot;\n\n===== CHILD MEAL PLAN OPTIONS =====&quot; +</span>
+                    &quot;\nFocus: Growth, energy, immunity, and bone health.&quot; +
+
+                    &quot;\n\n[OPTION 1]&quot; +
+                    &quot;\nBreakfast: Milk + Banana + Idli&quot; +
+                    &quot;\nLunch: Rice + Dal + Vegetables + Curd&quot; +
+                    &quot;\nSnack: Fruit + Nuts&quot; +
+                    &quot;\nDinner: Chapati + Dal + Vegetables&quot; +
+
+                    &quot;\n\n[OPTION 2]&quot; +
+                    &quot;\nBreakfast: Oats + Milk + Apple&quot; +
+                    &quot;\nLunch: Rice + Sambar + Curd&quot; +
+                    &quot;\nSnack: Peanut Chikki / Fruit&quot; +
+                    &quot;\nDinner: Rice + Egg/Paneer + Vegetables&quot; +
+
+                    &quot;\n\nAvoid: Heavy dieting, bodybuilding diet, excess supplements.&quot; +
+<span class="nc" id="L360">                    &quot;\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L361">                    &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+        }
+
+<span class="nc bnc" id="L364" title="All 2 branches missed.">        if (ageCategory.equals(&quot;Teenager&quot;)) {</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">            if (dietType.equals(&quot;Veg&quot;)) {</span>
+<span class="nc" id="L366">                return &quot;\n\n===== TEEN VEG MEAL OPTIONS =====&quot; +</span>
+                        &quot;\nFocus: Growth + fitness. Avoid extreme dieting.&quot; +
+
+                        &quot;\n\n[OPTION 1]&quot; +
+                        &quot;\nBreakfast: Oats + Milk + Banana&quot; +
+                        &quot;\nLunch: Rice + Dal + Paneer + Vegetables&quot; +
+                        &quot;\nSnack: Curd + Peanuts&quot; +
+                        &quot;\nDinner: Chapati/Rice + Rajma/Chana&quot; +
+
+                        &quot;\n\n[OPTION 2]&quot; +
+                        &quot;\nBreakfast: Dosa + Peanut Chutney + Milk&quot; +
+                        &quot;\nLunch: Rice + Sambar + Curd&quot; +
+                        &quot;\nSnack: Banana Shake&quot; +
+                        &quot;\nDinner: Chapati + Paneer + Vegetables&quot; +
+
+                        &quot;\n\n[OPTION 3]&quot; +
+                        &quot;\nBreakfast: Idli + Sambar + Milk&quot; +
+                        &quot;\nLunch: Rice + Dal + Soya Chunks&quot; +
+                        &quot;\nSnack: Fruits + Nuts&quot; +
+                        &quot;\nDinner: Rice + Chana + Vegetables&quot; +
+
+<span class="nc" id="L387">                        &quot;\n\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L388">                        &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+            } else {
+<span class="nc" id="L390">                return &quot;\n\n===== TEEN NON-VEG MEAL OPTIONS =====&quot; +</span>
+                        &quot;\nFocus: Growth + fitness. Avoid extreme dieting.&quot; +
+
+                        &quot;\n\n[OPTION 1]&quot; +
+                        &quot;\nBreakfast: Eggs + Milk + Banana&quot; +
+                        &quot;\nLunch: Rice + Chicken + Vegetables&quot; +
+                        &quot;\nSnack: Curd + Fruits&quot; +
+                        &quot;\nDinner: Rice/Chapati + Eggs/Fish&quot; +
+
+                        &quot;\n\n[OPTION 2]&quot; +
+                        &quot;\nBreakfast: Oats + Milk + 2 Eggs&quot; +
+                        &quot;\nLunch: Rice + Egg Curry + Dal&quot; +
+                        &quot;\nSnack: Banana + Peanuts&quot; +
+                        &quot;\nDinner: Chapati + Chicken + Vegetables&quot; +
+
+                        &quot;\n\n[OPTION 3]&quot; +
+                        &quot;\nBreakfast: Dosa + Omelette + Milk&quot; +
+                        &quot;\nLunch: Rice + Fish Curry + Vegetables&quot; +
+                        &quot;\nSnack: Curd + Fruit&quot; +
+                        &quot;\nDinner: Rice + Eggs + Dal&quot; +
+
+<span class="nc" id="L411">                        &quot;\n\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L412">                        &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+            }
+        }
+
+<span class="nc bnc" id="L416" title="All 2 branches missed.">        if (ageCategory.equals(&quot;Adult&quot;)) {</span>
+
+<span class="nc bnc" id="L418" title="All 4 branches missed.">            if (goal.equals(&quot;Bulk&quot;) &amp;&amp; dietType.equals(&quot;Veg&quot;)) {</span>
+<span class="nc" id="L419">                return &quot;\n\n===== ADULT VEG BULKING MEAL OPTIONS =====&quot; +</span>
+
+                        &quot;\n\n[OPTION 1]&quot; +
+                        &quot;\nBreakfast: Oats + Milk + Banana + Peanut Butter&quot; +
+                        &quot;\nLunch: Rice + Dal + Paneer + Curd&quot; +
+                        &quot;\nSnack: Milk + Dry Fruits&quot; +
+                        &quot;\nDinner: Rice + Rajma + Vegetables&quot; +
+
+                        &quot;\n\n[OPTION 2]&quot; +
+                        &quot;\nBreakfast: 3 Chapatis + Paneer Bhurji + Milk&quot; +
+                        &quot;\nLunch: Rice + Chana + Curd&quot; +
+                        &quot;\nSnack: Banana Shake + Peanuts&quot; +
+                        &quot;\nDinner: Chapati + Dal + Soya Chunks&quot; +
+
+                        &quot;\n\n[OPTION 3]&quot; +
+                        &quot;\nBreakfast: Dosa + Peanut Chutney + Milk&quot; +
+                        &quot;\nLunch: Rice + Sambar + Paneer&quot; +
+                        &quot;\nSnack: Curd + Nuts&quot; +
+                        &quot;\nDinner: Rice + Dal + Vegetables + Ghee&quot; +
+
+                        &quot;\n\n[OPTION 4]&quot; +
+                        &quot;\nBreakfast: Upma + Milk + Banana&quot; +
+                        &quot;\nLunch: Rice + Rajma + Curd&quot; +
+                        &quot;\nSnack: Peanut Butter Sandwich&quot; +
+                        &quot;\nDinner: Chapati + Paneer + Vegetables&quot; +
+
+<span class="nc" id="L445">                        &quot;\n\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L446">                        &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+            }
+
+<span class="nc bnc" id="L449" title="All 4 branches missed.">            if (goal.equals(&quot;Bulk&quot;) &amp;&amp; dietType.equals(&quot;Non-Veg&quot;)) {</span>
+<span class="nc" id="L450">                return &quot;\n\n===== ADULT NON-VEG BULKING MEAL OPTIONS =====&quot; +</span>
+
+                        &quot;\n\n[OPTION 1]&quot; +
+                        &quot;\nBreakfast: 5 Eggs + Bread/Chapati + 300 ml Milk + Banana&quot; +
+                        &quot;\nLunch: Rice + 150 g Chicken + Vegetables&quot; +
+                        &quot;\nSnack: Peanut Butter Sandwich + Curd&quot; +
+                        &quot;\nDinner: Rice + Chicken/Fish + Vegetables&quot; +
+
+                        &quot;\n\n[OPTION 2]&quot; +
+                        &quot;\nBreakfast: Oats + Milk + 3 Boiled Eggs&quot; +
+                        &quot;\nLunch: Rice + Egg Curry + Dal&quot; +
+                        &quot;\nSnack: Banana Shake + Peanuts&quot; +
+                        &quot;\nDinner: Chapati + Chicken + Curd&quot; +
+
+                        &quot;\n\n[OPTION 3]&quot; +
+                        &quot;\nBreakfast: Dosa + Omelette + Milk&quot; +
+                        &quot;\nLunch: Rice + Fish Curry + Vegetables&quot; +
+                        &quot;\nSnack: Curd + Nuts&quot; +
+                        &quot;\nDinner: Rice + 3 Eggs + Dal&quot; +
+
+                        &quot;\n\n[OPTION 4]&quot; +
+                        &quot;\nBreakfast: Upma + 4 Eggs + Banana&quot; +
+                        &quot;\nLunch: Rice + Chicken Breast + Curd&quot; +
+                        &quot;\nSnack: Milk + Peanut Butter&quot; +
+                        &quot;\nDinner: Chapati + Fish/Chicken + Vegetables&quot; +
+
+<span class="nc" id="L476">                        &quot;\n\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L477">                        &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+            }
+
+<span class="nc bnc" id="L480" title="All 4 branches missed.">            if (goal.equals(&quot;Cut&quot;) &amp;&amp; dietType.equals(&quot;Veg&quot;)) {</span>
+<span class="nc" id="L481">                return &quot;\n\n===== ADULT VEG CUTTING MEAL OPTIONS =====&quot; +</span>
+
+                        &quot;\n\n[OPTION 1]&quot; +
+                        &quot;\nBreakfast: Oats + Fruits&quot; +
+                        &quot;\nLunch: Dal + Vegetables + Small Rice&quot; +
+                        &quot;\nSnack: Sprouts / Buttermilk&quot; +
+                        &quot;\nDinner: Paneer + Salad&quot; +
+
+                        &quot;\n\n[OPTION 2]&quot; +
+                        &quot;\nBreakfast: Milk + Apple + Nuts&quot; +
+                        &quot;\nLunch: Chapati + Dal + Curd&quot; +
+                        &quot;\nSnack: Fruits&quot; +
+                        &quot;\nDinner: Soya Chunks + Vegetables&quot; +
+
+                        &quot;\n\n[OPTION 3]&quot; +
+                        &quot;\nBreakfast: Idli + Sambar&quot; +
+                        &quot;\nLunch: Rice + Dal + Salad&quot; +
+                        &quot;\nSnack: Buttermilk&quot; +
+                        &quot;\nDinner: Paneer + Vegetables&quot; +
+
+<span class="nc" id="L501">                        &quot;\n\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L502">                        &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+            }
+
+<span class="nc bnc" id="L505" title="All 4 branches missed.">            if (goal.equals(&quot;Cut&quot;) &amp;&amp; dietType.equals(&quot;Non-Veg&quot;)) {</span>
+<span class="nc" id="L506">                return &quot;\n\n===== ADULT NON-VEG CUTTING MEAL OPTIONS =====&quot; +</span>
+
+                        &quot;\n\n[OPTION 1]&quot; +
+                        &quot;\nBreakfast: Boiled Eggs + Fruits&quot; +
+                        &quot;\nLunch: Chicken + Salad + Small Rice&quot; +
+                        &quot;\nSnack: Buttermilk / Curd&quot; +
+                        &quot;\nDinner: Eggs + Vegetables&quot; +
+
+                        &quot;\n\n[OPTION 2]&quot; +
+                        &quot;\nBreakfast: Omelette + Milk&quot; +
+                        &quot;\nLunch: Fish + Vegetables + Small Rice&quot; +
+                        &quot;\nSnack: Curd&quot; +
+                        &quot;\nDinner: Chicken Soup + Salad&quot; +
+
+                        &quot;\n\n[OPTION 3]&quot; +
+                        &quot;\nBreakfast: 3 Eggs + Apple&quot; +
+                        &quot;\nLunch: Grilled Chicken + Dal&quot; +
+                        &quot;\nSnack: Buttermilk&quot; +
+                        &quot;\nDinner: Fish/Eggs + Vegetables&quot; +
+
+<span class="nc" id="L526">                        &quot;\n\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L527">                        &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+            }
+
+<span class="nc bnc" id="L530" title="All 2 branches missed.">            if (dietType.equals(&quot;Veg&quot;)) {</span>
+<span class="nc" id="L531">                return &quot;\n\n===== ADULT VEG MAINTENANCE MEAL OPTIONS =====&quot; +</span>
+
+                        &quot;\n\n[OPTION 1]&quot; +
+                        &quot;\nBreakfast: Milk + Oats + Banana&quot; +
+                        &quot;\nLunch: Rice + Dal + Curd + Vegetables&quot; +
+                        &quot;\nSnack: Fruits + Nuts&quot; +
+                        &quot;\nDinner: Chapati + Paneer + Vegetables&quot; +
+
+                        &quot;\n\n[OPTION 2]&quot; +
+                        &quot;\nBreakfast: Idli/Dosa + Milk&quot; +
+                        &quot;\nLunch: Rice + Rajma + Curd&quot; +
+                        &quot;\nSnack: Buttermilk + Peanuts&quot; +
+                        &quot;\nDinner: Chapati + Dal + Salad&quot; +
+
+<span class="nc" id="L545">                        &quot;\n\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L546">                        &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+            } else {
+<span class="nc" id="L548">                return &quot;\n\n===== ADULT NON-VEG MAINTENANCE MEAL OPTIONS =====&quot; +</span>
+
+                        &quot;\n\n[OPTION 1]&quot; +
+                        &quot;\nBreakfast: Eggs + Milk + Fruit&quot; +
+                        &quot;\nLunch: Rice + Chicken + Vegetables + Curd&quot; +
+                        &quot;\nSnack: Fruits + Nuts&quot; +
+                        &quot;\nDinner: Chapati + Eggs/Fish + Vegetables&quot; +
+
+                        &quot;\n\n[OPTION 2]&quot; +
+                        &quot;\nBreakfast: Oats + Milk + Boiled Eggs&quot; +
+                        &quot;\nLunch: Rice + Fish Curry + Vegetables&quot; +
+                        &quot;\nSnack: Curd + Fruit&quot; +
+                        &quot;\nDinner: Rice/Chapati + Chicken + Salad&quot; +
+
+<span class="nc" id="L562">                        &quot;\n\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L563">                        &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+            }
+        }
+
+<span class="nc" id="L567">        return &quot;\n\n===== SENIOR MEAL PLAN OPTIONS =====&quot; +</span>
+                &quot;\nFocus: Easy digestion, strength, heart health, and joint support.&quot; +
+
+                &quot;\n\n[OPTION 1]&quot; +
+                &quot;\nBreakfast: Oats + Milk + Fruits&quot; +
+                &quot;\nLunch: Rice/Chapati + Dal + Vegetables + Curd&quot; +
+                &quot;\nSnack: Fruits / Buttermilk&quot; +
+                &quot;\nDinner: Light Protein + Vegetables&quot; +
+
+                &quot;\n\n[OPTION 2]&quot; +
+                &quot;\nBreakfast: Idli + Sambar&quot; +
+                &quot;\nLunch: Soft Rice + Dal + Curd&quot; +
+                &quot;\nSnack: Banana / Buttermilk&quot; +
+                &quot;\nDinner: Chapati + Vegetables + Light Dal&quot; +
+
+<span class="nc" id="L582">                &quot;\n\nRequired Protein: &quot; + String.format(&quot;%.0f&quot;, protein) + &quot; g&quot; +</span>
+<span class="nc" id="L583">                &quot;\nRequired Calories: &quot; + String.format(&quot;%.0f&quot;, calories) + &quot; kcal&quot;;</span>
+    }
+
+    public String generateWorkoutPlan(String ageCategory, String goal, String experience, String days) {
+
+<span class="nc bnc" id="L588" title="All 2 branches missed.">        if (ageCategory.equals(&quot;Child&quot;)) {</span>
+<span class="nc" id="L589">            return &quot;\n\n===== CHILD ACTIVITY PLAN =====&quot; +</span>
+                    &quot;\nNo heavy gym workout recommended.&quot; +
+                    &quot;\nRecommended Activities:&quot; +
+                    &quot;\n- Outdoor games&quot; +
+                    &quot;\n- Running&quot; +
+                    &quot;\n- Cycling&quot; +
+                    &quot;\n- Swimming&quot; +
+                    &quot;\n- Stretching&quot; +
+                    &quot;\nDuration: 30-45 minutes daily.&quot;;
+        }
+
+<span class="nc bnc" id="L600" title="All 2 branches missed.">        if (ageCategory.equals(&quot;Teenager&quot;)) {</span>
+<span class="nc bnc" id="L601" title="All 2 branches missed.">            if (experience.equals(&quot;Beginner&quot;)) {</span>
+<span class="nc" id="L602">                return &quot;\n\n===== TEEN BEGINNER WORKOUT PLAN =====&quot; +</span>
+                        &quot;\nFocus: Bodyweight strength and safe form.&quot; +
+                        &quot;\n- Push-ups: 3 sets x 10 reps&quot; +
+                        &quot;\n- Squats: 3 sets x 15 reps&quot; +
+                        &quot;\n- Plank: 3 sets x 30 seconds&quot; +
+                        &quot;\n- Jogging/Cycling: 20 minutes&quot;;
+<span class="nc bnc" id="L608" title="All 2 branches missed.">            } else if (experience.equals(&quot;Intermediate&quot;)) {</span>
+<span class="nc" id="L609">                return &quot;\n\n===== TEEN INTERMEDIATE WORKOUT PLAN =====&quot; +</span>
+                        &quot;\nFocus: Controlled gym training.&quot; +
+                        &quot;\nDay 1: Upper Body&quot; +
+                        &quot;\nDay 2: Lower Body&quot; +
+                        &quot;\nDay 3: Cardio + Core&quot; +
+                        &quot;\nDay 4: Full Body&quot;;
+            } else {
+<span class="nc" id="L616">                return &quot;\n\n===== TEEN ADVANCED WORKOUT PLAN =====&quot; +</span>
+                        &quot;\nFocus: Strength + muscle gain safely.&quot; +
+                        &quot;\nDay 1: Push&quot; +
+                        &quot;\nDay 2: Pull&quot; +
+                        &quot;\nDay 3: Legs&quot; +
+                        &quot;\nDay 4: Upper Body&quot; +
+                        &quot;\nDay 5: Lower Body&quot;;
+            }
+        }
+
+<span class="nc bnc" id="L626" title="All 2 branches missed.">        if (ageCategory.equals(&quot;Adult&quot;)) {</span>
+<span class="nc bnc" id="L627" title="All 2 branches missed.">            if (goal.equals(&quot;Bulk&quot;)) {</span>
+<span class="nc" id="L628">                return &quot;\n\n===== ADULT BULKING WORKOUT PLAN =====&quot; +</span>
+                        &quot;\nGoal: Muscle gain with progressive overload&quot; +
+                        &quot;\n3 Days: Full Body Split&quot; +
+                        &quot;\n4 Days: Upper / Lower Split&quot; +
+                        &quot;\n5 Days: Push Pull Legs + Upper Lower&quot; +
+                        &quot;\n6 Days: Push Pull Legs Repeat&quot; +
+                        &quot;\nSelected: &quot; + days +
+                        &quot;\nExperience Level: &quot; + experience;
+            }
+
+<span class="nc bnc" id="L638" title="All 2 branches missed.">            if (goal.equals(&quot;Cut&quot;)) {</span>
+<span class="nc" id="L639">                return &quot;\n\n===== ADULT CUTTING WORKOUT PLAN =====&quot; +</span>
+                        &quot;\nGoal: Fat loss while maintaining muscle&quot; +
+                        &quot;\nDay 1: Full Body Strength&quot; +
+                        &quot;\nDay 2: Cardio + Core&quot; +
+                        &quot;\nDay 3: Upper Body + Cardio&quot; +
+                        &quot;\nDay 4: Lower Body + Cardio&quot; +
+                        &quot;\nSelected: &quot; + days +
+                        &quot;\nExperience Level: &quot; + experience;
+            }
+
+<span class="nc" id="L649">            return &quot;\n\n===== ADULT MAINTENANCE WORKOUT PLAN =====&quot; +</span>
+                    &quot;\nGoal: Maintain strength and fitness&quot; +
+                    &quot;\nDay 1: Push Workout&quot; +
+                    &quot;\nDay 2: Pull Workout&quot; +
+                    &quot;\nDay 3: Legs&quot; +
+                    &quot;\nDay 4: Cardio + Core&quot; +
+                    &quot;\nSelected: &quot; + days +
+                    &quot;\nExperience Level: &quot; + experience;
+        }
+
+<span class="nc" id="L659">        return &quot;\n\n===== SENIOR FITNESS PLAN =====&quot; +</span>
+                &quot;\nGoal: Mobility, balance, and light strength.&quot; +
+                &quot;\n- Walking: 20-30 minutes&quot; +
+                &quot;\n- Light stretching&quot; +
+                &quot;\n- Chair squats: 2 sets x 10 reps&quot; +
+                &quot;\n- Wall push-ups: 2 sets x 10 reps&quot; +
+                &quot;\n- Balance practice: 5-10 minutes&quot;;
+    }
+
+    public static void main(String[] args) {
+<span class="nc" id="L669">        new FitForgeGUI();</span>
+<span class="nc" id="L670">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -48,15 +48,16 @@ public class Main {
     String goal = sc.nextLine();
 
    profile = new UserProfile(
-    name,
-    age,
-    "Male",
-    height,
-    weight,
-    goal,
-    "Beginner",
-    5
-);
+            name,
+            age,
+            "Male",
+            height,
+            weight,
+            goal,
+            "Veg",
+            "Beginner",
+            5
+        );
 
     System.out.println("\nProfile Created Successfully!");
 

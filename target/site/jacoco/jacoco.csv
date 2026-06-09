@@ -1,0 +1,9 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+FitForge,default,FitForgeGUI.ReportBackgroundPanel,93,0,0,0,15,0,2,0,2,0
+FitForge,default,UserProfile,0,77,0,8,0,18,0,7,0,3
+FitForge,default,FitForgeGUI,1291,0,122,0,236,0,75,0,14,0
+FitForge,default,FitForgeGUI.BackgroundPanel,113,0,0,0,18,0,2,0,2,0
+FitForge,default,Meal,0,12,0,0,0,5,0,1,0,1
+FitForge,default,Main,298,0,15,0,86,0,13,0,3,0
+FitForge,default,RecommendationService,3,529,3,13,1,119,4,9,1,4
+FitForge,default,Workout,0,15,0,0,0,6,0,1,0,1
